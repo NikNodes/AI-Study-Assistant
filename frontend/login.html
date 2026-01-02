@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login | AI Study Assistant</title>
+<link rel="stylesheet" href="auth.css">
+</head>
 <body>
 
-<h2>Login</h2>
+<div class="auth-container">
+  <div class="auth-box">
+    <h2>Welcome Back 👋</h2>
+    <p>Login to continue</p>
 
-<input id="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
 
-<button onclick="login()">Login</button>
+    <button onclick="login()">Login</button>
+
+    <p class="switch">
+      Don’t have an account?
+      <a href="register.html">Register</a>
+    </p>
+  </div>
+</div>
 
 <script>
 function login() {
-    fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            email: email.value,
-            password: password.value
-        })
-    })
-    .then(res => res.json())
-    .then(data => alert(data.message))
-    .catch(err => alert("Error"));
+  alert("Login button clicked (backend will connect later)");
 }
 </script>
 
