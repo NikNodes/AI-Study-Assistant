@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard | AI Study Assistant</title>
+<link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<!-- Top Navbar -->
+<div class="navbar">
+  <h2>AI Study Assistant</h2>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<!-- Main Dashboard -->
+<div class="dashboard">
+  <h1>Welcome, Student 👋</h1>
+  <p>What would you like to do today?</p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>📄 Upload Notes</h3>
+      <p>Add your study material</p>
+      <button>Go</button>
+    </div>
+
+    <div class="card">
+      <h3>🤖 Ask AI</h3>
+      <p>Ask doubts from notes</p>
+      <button>Go</button>
+    </div>
+
+    <div class="card">
+      <h3>📝 Generate Quiz</h3>
+      <p>Practice MCQs</p>
+      <button>Go</button>
+    </div>
+
+    <div class="card">
+      <h3>📅 Study Planner</h3>
+      <p>Plan your study</p>
+      <button>Go</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function logout() {
+  alert("Logged out");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
