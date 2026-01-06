@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Upload Notes | AI Study Assistant</title>
+<link rel="stylesheet" href="upload.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h2>AI Study Assistant</h2>
+  <button onclick="goBack()">Back</button>
+</div>
+
+<!-- Upload Card -->
+<div class="upload-container">
+  <div class="upload-box">
+    <h2>📄 Upload Study Notes</h2>
+    <p>Upload PDF or text notes for AI learning</p>
+
+    <input type="file" id="noteFile">
+    <button onclick="uploadNote()">Upload</button>
+  </div>
+</div>
+
+<script>
+function goBack() {
+  window.location.href = "dashboard.html";
+}
+
+function uploadNote() {
+  const fileInput = document.getElementById("noteFile");
+
+  if (!fileInput.files[0]) {
+    alert("Please select a file first");
+    return;
+  }
+
+  alert("File selected successfully (backend will handle upload later)");
+}
+</script>
+
+</body>
+</html>

@@ -7,19 +7,29 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
+// Test route
 app.get("/", (req, res) => {
-    res.send("AI Study Assistant Backend Running");
+  res.send("AI Study Assistant Backend Running");
 });
 
+// Auth routes
 const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
 
+// Notes routes  ✅ STEP 5 FIX
+const notesRoutes = require("./routes/notes");
+app.use("/api/notes", notesRoutes);
+
+// Serve uploads folder
+app.use("/uploads", express.static("uploads"));
+
+// Start server (ALWAYS LAST)
 const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
