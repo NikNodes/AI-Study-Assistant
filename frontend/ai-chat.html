@@ -21,22 +21,28 @@
 
 <script>
 function askAI() {
-  const q = document.getElementById("question").value;
-  if (!q) return;
+  const question = document.getElementById("question").value;
+  if (!question) return;
 
   const chatBox = document.getElementById("chatBox");
+  chatBox.innerHTML += `<div class="user">${question}</div>`;
 
-  chatBox.innerHTML += `<div class="user">${q}</div>`;
-
-  // TEMPORARY AI RESPONSE (Mock)
-  setTimeout(() => {
-    chatBox.innerHTML += `<div class="ai">This is a sample AI response. Real AI will be connected later.</div>`;
+  fetch("http://localhost:5000/api/ai/ask", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ question })
+  })
+  .then(res => res.json())
+  .then(data => {
+    chatBox.innerHTML += `<div class="ai">${data.answer}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
-  }, 500);
+  })
+  .catch(() => {
+    chatBox.innerHTML += `<div class="ai">AI error</div>`;
+  });
 
   document.getElementById("question").value = "";
 }
 </script>
-
-</body>
-</html>

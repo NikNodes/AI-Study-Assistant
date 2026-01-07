@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Notes | AI Study Assistant</title>
+<link rel="stylesheet" href="notes.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h2>AI Study Assistant</h2>
+  <button onclick="goBack()">Back</button>
+</div>
+
+<!-- Notes Section -->
+<div class="notes-container">
+  <h2>📚 My Uploaded Notes</h2>
+
+  <div class="notes-list">
+    <div class="note-card">
+      <span>Operating Systems Notes.pdf</span>
+      <button>View</button>
+    </div>
+
+    <div class="note-card">
+      <span>Machine Learning Unit 3.pdf</span>
+      <button>View</button>
+    </div>
+
+    <div class="note-card">
+      <span>Software Engineering SRS.docx</span>
+      <button>View</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goBack() {
+  window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

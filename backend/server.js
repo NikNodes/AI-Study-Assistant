@@ -27,6 +27,10 @@ app.use("/api/notes", notesRoutes);
 
 // Serve uploads folder
 app.use("/uploads", express.static("uploads"));
+// AI routes
+const aiRoutes = require("./routes/ai");
+app.use("/api/ai", aiRoutes);
+
 
 // Start server (ALWAYS LAST)
 const PORT = 5000;
