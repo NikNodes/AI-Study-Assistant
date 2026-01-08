@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generate Quiz | AI Study Assistant</title>
+<link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h2>AI Study Assistant</h2>
+  <button onclick="goBack()">Back</button>
+</div>
+
+<!-- Quiz Container -->
+<div class="quiz-container">
+  <h2>📝 Generate Quiz</h2>
+
+  <input type="text" id="topic" placeholder="Enter topic (e.g. Operating System)">
+  <button onclick="generateQuiz()">Generate Quiz</button>
+
+  <div id="quizArea"></div>
+</div>
+
+<script>
+function goBack() {
+  window.location.href = "dashboard.html";
+}
+
+// Question Bank
+const quizData = {
+  os: [
+    {
+      q: "What is an Operating System?",
+      options: ["System Software", "Hardware", "Compiler"],
+      correct: 0
+    },
+    {
+      q: "Main function of OS?",
+      options: ["Resource Management", "Gaming", "Browsing"],
+      correct: 0
+    }
+  ],
+  dbms: [
+    {
+      q: "What is DBMS?",
+      options: ["Database Software", "Operating System", "Programming Language"],
+      correct: 0
+    },
+    {
+      q: "Which is a DBMS?",
+      options: ["MySQL", "Windows", "Linux"],
+      correct: 0
+    }
+  ],
+  ai: [
+    {
+      q: "What does AI stand for?",
+      options: ["Artificial Intelligence", "Automated Input", "Advanced Internet"],
+      correct: 0
+    },
+    {
+      q: "AI is mainly used for?",
+      options: ["Decision Making", "Cooking", "Typing"],
+      correct: 0
+    }
+  ]
+};
+
+function generateQuiz() {
+  const topicInput = document.getElementById("topic").value.toLowerCase();
+  const quizArea = document.getElementById("quizArea");
+  quizArea.innerHTML = "";
+
+  let questions;
+
+  if (topicInput.includes("os")) {
+    questions = quizData.os;
+  } else if (topicInput.includes("dbms")) {
+    questions = quizData.dbms;
+  } else if (topicInput.includes("ai")) {
+    questions = quizData.ai;
+  } else {
+    quizArea.innerHTML = "<p>No quiz available for this topic ❌</p>";
+    return;
+  }
+
+  questions.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<p>${index + 1}. ${item.q}</p>`;
+
+    item.options.forEach((opt, i) => {
+      const btn = document.createElement("button");
+      btn.innerText = opt;
+      btn.onclick = () => checkAnswer(btn, i === item.correct);
+      div.appendChild(btn);
+    });
+
+    quizArea.appendChild(div);
+  });
+}
+
+function checkAnswer(btn, correct) {
+  if (correct) {
+    btn.style.background = "#16a34a";
+    alert("Correct ✅");
+  } else {
+    btn.style.background = "#dc2626";
+    alert("Wrong ❌");
+  }
+}
+</script>
+
+
+</body>
+</html>
