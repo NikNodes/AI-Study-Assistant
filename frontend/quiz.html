@@ -28,63 +28,46 @@ function goBack() {
   window.location.href = "dashboard.html";
 }
 
-// Question Bank
-const quizData = {
-  os: [
-    {
-      q: "What is an Operating System?",
-      options: ["System Software", "Hardware", "Compiler"],
-      correct: 0
-    },
-    {
-      q: "Main function of OS?",
-      options: ["Resource Management", "Gaming", "Browsing"],
-      correct: 0
-    }
-  ],
-  dbms: [
-    {
-      q: "What is DBMS?",
-      options: ["Database Software", "Operating System", "Programming Language"],
-      correct: 0
-    },
-    {
-      q: "Which is a DBMS?",
-      options: ["MySQL", "Windows", "Linux"],
-      correct: 0
-    }
-  ],
-  ai: [
-    {
-      q: "What does AI stand for?",
-      options: ["Artificial Intelligence", "Automated Input", "Advanced Internet"],
-      correct: 0
-    },
-    {
-      q: "AI is mainly used for?",
-      options: ["Decision Making", "Cooking", "Typing"],
-      correct: 0
-    }
-  ]
-};
-
+// AI-like quiz generator
 function generateQuiz() {
-  const topicInput = document.getElementById("topic").value.toLowerCase();
+  const topic = document.getElementById("topic").value.trim();
   const quizArea = document.getElementById("quizArea");
   quizArea.innerHTML = "";
 
-  let questions;
-
-  if (topicInput.includes("os")) {
-    questions = quizData.os;
-  } else if (topicInput.includes("dbms")) {
-    questions = quizData.dbms;
-  } else if (topicInput.includes("ai")) {
-    questions = quizData.ai;
-  } else {
-    quizArea.innerHTML = "<p>No quiz available for this topic ❌</p>";
+  if (!topic) {
+    alert("Please enter a topic");
     return;
   }
+
+  const questions = [
+    {
+      q: `What is ${topic}?`,
+      options: [
+        `${topic} is a system concept`,
+        `${topic} is hardware`,
+        `${topic} is a game`
+      ],
+      correct: 0
+    },
+    {
+      q: `Which field uses ${topic}?`,
+      options: [
+        `Education`,
+        `Software Engineering`,
+        `Cooking`
+      ],
+      correct: 1
+    },
+    {
+      q: `Main advantage of ${topic}?`,
+      options: [
+        `Improves efficiency`,
+        `Consumes memory`,
+        `Reduces speed`
+      ],
+      correct: 0
+    }
+  ];
 
   questions.forEach((item, index) => {
     const div = document.createElement("div");
@@ -112,6 +95,7 @@ function checkAnswer(btn, correct) {
   }
 }
 </script>
+
 
 
 </body>
