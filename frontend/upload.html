@@ -25,21 +25,24 @@
 </div>
 
 <script>
-function goBack() {
-  window.location.href = "dashboard.html";
-}
-
 function uploadNote() {
   const fileInput = document.getElementById("noteFile");
+  const userId = localStorage.getItem("userId");
 
   if (!fileInput.files[0]) {
-    alert("Please select a file first");
+    alert("Please select a file");
     return;
   }
 
-  alert("File selected successfully (backend will handle upload later)");
+  const formData = new FormData();
+  formData.append("note", fileInput.files[0]);
+  formData.append("userId", userId);
+
+  fetch("http://localhost:5000/api/notes/upload", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => alert(data.message));
 }
 </script>
-
-</body>
-</html>

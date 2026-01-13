@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
-const NoteSchema = new mongoose.Schema({
+const noteSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
   filename: String,
   originalname: String,
   uploadedAt: {
@@ -9,4 +14,4 @@ const NoteSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("Note", NoteSchema);
+module.exports = mongoose.model("Note", noteSchema);

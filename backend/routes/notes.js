@@ -19,7 +19,10 @@ const upload = multer({ storage });
 // Upload note API
 router.post("/upload", upload.single("note"), async (req, res) => {
   try {
+    const { userId } = req.body;
+
     const note = new Note({
+      userId,
       filename: req.file.filename,
       originalname: req.file.originalname
     });
@@ -29,6 +32,15 @@ router.post("/upload", upload.single("note"), async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Upload failed" });
   }
+  router.get("/user/:userId", async (req, res) => {
+  try {
+    const notes = await Note.find({ userId: req.params.userId });
+    res.json(notes);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching notes" });
+  }
+});
+
 });
 
 module.exports = router;

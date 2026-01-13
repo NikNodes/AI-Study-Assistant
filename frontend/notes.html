@@ -36,10 +36,28 @@
 </div>
 
 <script>
-function goBack() {
-  window.location.href = "dashboard.html";
-}
+const userId = localStorage.getItem("userId");
+
+fetch(`http://localhost:5000/api/notes/user/${userId}`)
+  .then(res => res.json())
+  .then(notes => {
+    const list = document.querySelector(".notes-list");
+    list.innerHTML = "";
+
+    notes.forEach(note => {
+      const div = document.createElement("div");
+      div.className = "note-card";
+      div.innerHTML = `
+        <span>${note.originalname}</span>
+        <a href="http://localhost:5000/uploads/${note.filename}" target="_blank">
+          <button>View</button>
+        </a>
+      `;
+      list.appendChild(div);
+    });
+  });
 </script>
+
 
 </body>
 </html>

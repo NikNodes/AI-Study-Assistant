@@ -38,11 +38,14 @@ function login() {
   .then(data => {
     alert(data.message);
     if (data.message === "Login successful") {
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("userName", data.name);
       window.location.href = "dashboard.html";
     }
   });
 }
 </script>
+
 
 
 </body>
