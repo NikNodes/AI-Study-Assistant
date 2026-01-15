@@ -27,11 +27,9 @@ function askAI() {
   const chatBox = document.getElementById("chatBox");
   chatBox.innerHTML += `<div class="user">${question}</div>`;
 
-  fetch("http://localhost:5000/api/ai/ask", {
+  fetch("/api/ai/ask", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question })
   })
   .then(res => res.json())
@@ -40,7 +38,7 @@ function askAI() {
     chatBox.scrollTop = chatBox.scrollHeight;
   })
   .catch(() => {
-    chatBox.innerHTML += `<div class="ai">AI error</div>`;
+    chatBox.innerHTML += `<div class="ai">AI error occurred</div>`;
   });
 
   document.getElementById("question").value = "";

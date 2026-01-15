@@ -29,7 +29,7 @@ function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  fetch("http://localhost:5000/api/auth/login", {
+  fetch("/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
@@ -38,13 +38,13 @@ function login() {
   .then(data => {
     alert(data.message);
     if (data.message === "Login successful") {
-      localStorage.setItem("userId", data.userId);
-      localStorage.setItem("userName", data.name);
       window.location.href = "dashboard.html";
     }
-  });
+  })
+  .catch(err => console.error(err));
 }
 </script>
+
 
 
 
