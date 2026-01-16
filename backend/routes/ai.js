@@ -1,9 +1,7 @@
 const express = require("express");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const axios = require("axios");
 
 const router = express.Router();
-
-const genAI = new GoogleGenerativeAI(process.env.AI_API_KEY);
 
 router.post("/ask", async (req, res) => {
   console.log("AI ROUTE HIT");
@@ -11,18 +9,32 @@ router.post("/ask", async (req, res) => {
   try {
     const question = req.body.question;
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.0-pro"
+    const response = await axios.post(
+      "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent",
+      {
+        contents: [
+          {
+            parts: [{ text: question }]
+          }
+        ]
+      },
+      {
+        params: {
+          key: process.env.AI_API_KEY
+        },
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
-    });
+    const answer =
+      response.data.candidates[0].content.parts[0].text;
 
-    const result = await model.generateContent(question);
-    const text = result.response.text();
-
-    res.json({ answer: text });
+    res.json({ answer });
 
   } catch (error) {
-    console.error("AI FINAL ERROR:", error);
+    console.error("AI ERROR FINAL:", error.response?.data || error.message);
     res.json({ answer: "AI error occurred" });
   }
 });

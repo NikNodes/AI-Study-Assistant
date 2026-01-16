@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Login | AI Study Assistant</title>
-<link rel="stylesheet" href="auth.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | AI Study Assistant</title>
+    <link rel="stylesheet" href="auth.css">
 </head>
 <body>
 
@@ -25,28 +26,46 @@
 </div>
 
 <script>
+// ⚠️ NAZAR RAKHEIN: Niche wale number ko apne backend ke hisaab se badlein
+// Agar Flask use kar rahe hain to port 5000 hota hai, Node.js ke liye 3000/8000, etc.
+const BACKEND_URL = "http://localhost:5000"; 
+
 function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  fetch("/api/auth/login", {
+  if(!email || !password) {
+      alert("Please fill both fields");
+      return;
+  }
+
+  // Fetch me humne puri URL lagayi hai
+  fetch(`${BACKEND_URL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
   })
-  .then(res => res.json())
+  .then(async (res) => {
+      // Check karein ki response sahi hai ya nahi
+      if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Login failed");
+      }
+      return res.json();
+  })
   .then(data => {
     alert(data.message);
     if (data.message === "Login successful") {
+      // Login hone ke baad redirect karein
       window.location.href = "dashboard.html";
     }
   })
-  .catch(err => console.error(err));
+  .catch(err => {
+      console.error(err);
+      alert("Error: " + err.message);
+  });
 }
 </script>
-
-
-
 
 </body>
 </html>
