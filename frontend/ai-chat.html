@@ -3,6 +3,7 @@
 <head>
   <title>Ask AI | Study Assistant</title>
   <link rel="stylesheet" href="ai-chat.css">
+  <link rel="stylesheet" href="footer.css">
 </head>
 <body>
 
@@ -27,20 +28,28 @@ function askAI() {
   const chatBox = document.getElementById("chatBox");
   chatBox.innerHTML += `<div class="user">${question}</div>`;
 
-  fetch("/api/ai/ask", {
+  fetch("http://localhost:5000/api/ai/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question })
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+  })
   .then(data => {
-    chatBox.innerHTML += `<div class="ai">${data.answer}</div>`;
+    const message = data.answer || data.error || "AI error occurred";
+    chatBox.innerHTML += `<div class="ai">${message}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
   })
-  .catch(() => {
-    chatBox.innerHTML += `<div class="ai">AI error occurred</div>`;
+  .catch(error => {
+    console.error("Fetch error:", error);
+    chatBox.innerHTML += `<div class="ai">Connection error. Make sure the backend server is running on port 5000.</div>`;
   });
 
   document.getElementById("question").value = "";
 }
 </script>
+

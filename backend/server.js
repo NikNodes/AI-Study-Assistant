@@ -27,6 +27,9 @@ app.use("/uploads", express.static("uploads"));
 // AI routes
 const aiRoutes = require("./routes/ai");
 app.use("/api/ai", aiRoutes);
+// Planner routes
+const plannerRoutes = require("./routes/planner");
+app.use("/api/planner", plannerRoutes);
 // Start server (ALWAYS LAST)
 const PORT = 5000;
 app.listen(PORT, () => {

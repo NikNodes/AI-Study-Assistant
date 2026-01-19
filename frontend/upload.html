@@ -7,27 +7,152 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-  <h2>AI Study Assistant</h2>
-  <button onclick="goBack()">Back</button>
-</div>
-
-<!-- Upload Card -->
-<div class="upload-container">
-  <div class="upload-box">
-    <h2>📄 Upload Study Notes</h2>
-    <p>Upload PDF or text notes for AI learning</p>
-
-    <input type="file" id="noteFile">
-    <button onclick="uploadNote()">Upload</button>
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <h1>🎓 AI Study Assistant</h1>
+    </div>
+    <nav class="header-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="notes.html">My Notes</a>
+      <a href="ai-chat.html">Ask AI</a>
+      <a href="quiz.html">Quiz</a>
+      <button class="logout-btn" onclick="goBack()">Back</button>
+    </nav>
   </div>
-</div>
+</header>
+
+<!-- Main Content -->
+<main class="main-container">
+  <div class="upload-section">
+    <!-- Left Side - Info -->
+    <div class="info-box">
+      <h2>Upload Your Study Notes</h2>
+      <p>Transform your study materials into interactive learning experiences powered by AI</p>
+      
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="icon">✅</span>
+          <div>
+            <h4>AI Analysis</h4>
+            <p>Our AI instantly analyzes your notes for better understanding</p>
+          </div>
+        </div>
+        
+        <div class="feature-item">
+          <span class="icon">💡</span>
+          <div>
+            <h4>Smart Questions</h4>
+            <p>Ask doubts directly from your uploaded notes</p>
+          </div>
+        </div>
+        
+        <div class="feature-item">
+          <span class="icon">📝</span>
+          <div>
+            <h4>Auto Quiz</h4>
+            <p>Generate MCQ practice quizzes automatically</p>
+          </div>
+        </div>
+        
+        <div class="feature-item">
+          <span class="icon">🚀</span>
+          <div>
+            <h4>Fast & Easy</h4>
+            <p>Upload in seconds and start learning instantly</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Upload Box -->
+    <div class="upload-box">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📤</div>
+        <h3>Drag & Drop Your Notes</h3>
+        <p>or</p>
+        <button class="select-btn" onclick="document.getElementById('noteFile').click()">
+          Select File
+        </button>
+        <input type="file" id="noteFile" style="display:none;" accept=".pdf,.txt,.doc,.docx">
+        <p class="file-info">Supported: PDF, TXT, DOC, DOCX</p>
+      </div>
+
+      <div class="upload-status" id="uploadStatus" style="display:none;">
+        <div class="selected-file">
+          <span class="file-icon">📄</span>
+          <div class="file-details">
+            <p id="fileName"></p>
+            <p id="fileSize"></p>
+          </div>
+        </div>
+        <button class="upload-btn" onclick="uploadNote()">Upload File</button>
+        <button class="cancel-btn" onclick="cancelUpload()">Cancel</button>
+      </div>
+
+      <div class="progress-container" id="progressContainer" style="display:none;">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p id="progressText">Uploading... 0%</p>
+      </div>
+    </div>
+  </div>
+</main>
 
 <script>
+const uploadArea = document.getElementById("uploadArea");
+const noteFile = document.getElementById("noteFile");
+const uploadStatus = document.getElementById("uploadStatus");
+const progressContainer = document.getElementById("progressContainer");
+
+// Drag and drop
+uploadArea.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  uploadArea.classList.add("drag-active");
+});
+
+uploadArea.addEventListener("dragleave", () => {
+  uploadArea.classList.remove("drag-active");
+});
+
+uploadArea.addEventListener("drop", (e) => {
+  e.preventDefault();
+  uploadArea.classList.remove("drag-active");
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    noteFile.files = files;
+    showFileSelected();
+  }
+});
+
+noteFile.addEventListener("change", showFileSelected);
+
+function showFileSelected() {
+  const file = noteFile.files[0];
+  if (file) {
+    document.getElementById("fileName").textContent = file.name;
+    document.getElementById("fileSize").textContent = (file.size / 1024 / 1024).toFixed(2) + " MB";
+    uploadArea.style.display = "none";
+    uploadStatus.style.display = "block";
+  }
+}
+
+function cancelUpload() {
+  noteFile.value = "";
+  uploadArea.style.display = "block";
+  uploadStatus.style.display = "none";
+}
+
 function uploadNote() {
   const fileInput = document.getElementById("noteFile");
   const userId = localStorage.getItem("userId");
+
+  if (!userId) {
+    alert("Please login first");
+    return;
+  }
 
   if (!fileInput.files[0]) {
     alert("Please select a file");
@@ -38,11 +163,43 @@ function uploadNote() {
   formData.append("note", fileInput.files[0]);
   formData.append("userId", userId);
 
-  fetch("http://localhost:5000/api/notes/upload", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => alert(data.message));
+  uploadStatus.style.display = "none";
+  progressContainer.style.display = "block";
+
+  const xhr = new XMLHttpRequest();
+  
+  xhr.upload.addEventListener("progress", (e) => {
+    if (e.lengthComputable) {
+      const percentComplete = (e.loaded / e.total) * 100;
+      document.getElementById("progressFill").style.width = percentComplete + "%";
+      document.getElementById("progressText").textContent = "Uploading... " + Math.round(percentComplete) + "%";
+    }
+  });
+
+  xhr.addEventListener("load", () => {
+    if (xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
+      alert(data.message);
+      fileInput.value = "";
+      window.location.href = "notes.html";
+    } else {
+      alert("Upload failed!");
+      progressContainer.style.display = "none";
+      uploadStatus.style.display = "block";
+    }
+  });
+
+  xhr.addEventListener("error", () => {
+    alert("Upload error!");
+    progressContainer.style.display = "none";
+    uploadStatus.style.display = "block";
+  });
+
+  xhr.open("POST", "http://localhost:5000/api/notes/upload");
+  xhr.send(formData);
+}
+
+function goBack() {
+  window.location.href = "dashboard.html";
 }
 </script>

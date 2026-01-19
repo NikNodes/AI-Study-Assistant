@@ -1,8 +1,544 @@
-<html></html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>AI Study Assistant</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Assistant - Smart Learning Platform</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="footer.css">
   </head>
   <body>
-    <h1>Welcome to AI Study Assistant</h1>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <h2>🎓 AI Study Assistant</h2>
+      <div class="navbar-links">
+        <a href="index.html">Home</a>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="dashboard.html" id="dashboardLink" style="display:none;">Dashboard</a>
+      </div>
+      <div class="navbar-btn" id="navbarBtns">
+        <!-- Default buttons for not logged in users -->
+        <button class="login-btn" id="loginBtn" onclick="openLoginModal()">Login</button>
+        <button class="signup-btn" id="signupBtn" onclick="openRegisterModal()">Sign Up</button>
+        
+        <!-- Buttons for logged in users -->
+        <button class="login-btn" id="dashboardBtn" onclick="window.location.href='dashboard.html'" style="display:none;"></button>
+        <span id="userNameDisplay" style="color:white; display:none; margin: 0 15px; font-weight: 500;"></span>
+        <button class="signup-btn" id="logoutBtn" onclick="logoutUser()" style="display:none; background: #ffffff;">Logout</button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Transform Your Learning with AI </h1>
+        <p>Upload your notes, ask questions, generate quizzes, and ace your exams with the power of artificial intelligence. Your personal study companion is here.</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="openRegisterModal()">Get Started Free</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Learn More</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <h2 class="section-title">Powerful Features for Better Learning</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">📄</span>
+          <h3>Upload Notes</h3>
+          <p>Upload your study materials in PDF or text format. Our AI instantly analyzes and processes your notes for better learning.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🤖</span>
+          <h3>Ask AI Questions</h3>
+          <p>Get instant answers to your doubts directly from your notes. Our AI understands context and provides comprehensive explanations.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📝</span>
+          <h3>Generate Quizzes</h3>
+          <p>Automatically generate MCQ quizzes based on your notes. Test your knowledge and identify weak areas instantly.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📊</span>
+          <h3>Track Progress</h3>
+          <p>Monitor your learning journey with detailed analytics. See improvements over time and stay motivated.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📚</span>
+          <h3>Organize Notes</h3>
+          <p>Keep all your study materials organized in one place. Easy access to all your notes whenever you need them.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">⚡</span>
+          <h3>Smart Recommendations</h3>
+          <p>Get AI-powered study recommendations based on your performance and learning patterns.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Sign Up</h3>
+          <p>Create your free account in seconds. No credit card required to get started with our platform.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Upload Notes</h3>
+          <p>Upload your study notes in any format. Our AI processes them instantly for optimal learning.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Ask & Learn</h3>
+          <p>Ask your AI tutor any questions about your notes. Get detailed, context-aware explanations instantly.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Practice</h3>
+          <p>Generate quizzes and test your knowledge. Track your progress and master the material.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h2>50K+</h2>
+          <p>Active Students</p>
+        </div>
+        <div class="stat-item">
+          <h2>100K+</h2>
+          <p>Notes Uploaded</p>
+        </div>
+        <div class="stat-item">
+          <h2>95%</h2>
+          <p>Success Rate</p>
+        </div>
+        <div class="stat-item">
+          <h2>4.9★</h2>
+          <p>User Rating</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+      <h2 class="section-title">What Students Say About Us</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">"AI Study Assistant transformed the way I study. I can now upload my notes and get instant answers to my questions. Highly recommended!"</p>
+          <p class="testimonial-author">Priya Sharma</p>
+          <p class="testimonial-role">Engineering Student</p>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">"The quiz generation feature is incredible! I was able to practice MCQs directly from my notes and improved my grades significantly."</p>
+          <p class="testimonial-author">Aditya Patel</p>
+          <p class="testimonial-role">Medical Student</p>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">"Finally, an AI tutor that actually understands my study material. The explanations are clear and help me grasp complex concepts easily."</p>
+          <p class="testimonial-author">Neha Gupta</p>
+          <p class="testimonial-role">Law Student</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call To Action Section -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Ready to Transform Your Learning?</h2>
+        <p>Join thousands of students who are already using AI Study Assistant to achieve academic excellence.</p>
+        <div class="cta-buttons">
+          <button class="cta-btn cta-btn-primary" onclick="openRegisterModal()">Start Your Free Trial</button>
+          <button class="cta-btn cta-btn-secondary" onclick="openLoginModal()">Already Have an Account?</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <!-- Quick Links Section -->
+        <div class="footer-section quick-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="upload.html">Upload Notes</a></li>
+            <li><a href="notes.html">My Notes</a></li>
+            <li><a href="ai-chat.html">Ask AI</a></li>
+            <li><a href="quiz.html">Generate Quiz</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="footer-section resources">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Learning Guide</a></li>
+            <li><a href="#">Study Tips</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="footer-section contact">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <div class="contact-item" data-copy="support@aistudyassistant.com" title="Click to copy email">
+              📧 support@aistudyassistant.com
+            </div>
+            <div class="contact-item" data-copy="+1-800-STUDY-AI" title="Click to copy phone">
+              📱 +1-800-STUDY-AI
+            </div>
+            <div class="contact-item">
+              🌐 <a href="#">aistudyassistant.com</a>
+            </div>
+            <div class="contact-item">
+              📍 Online Platform
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 AI Study Assistant. All rights reserved.</p>
+        <p>Made with ❤️ for students</p>
+        <div class="social-links">
+          <a href="https://twitter.com" target="_blank" title="Twitter">𝕏</a>
+          <a href="https://facebook.com" target="_blank" title="Facebook">f</a>
+          <a href="https://linkedin.com" target="_blank" title="LinkedIn">in</a>
+          <a href="https://instagram.com" target="_blank" title="Instagram">📷</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+        <h2>Welcome Back 👋</h2>
+        <p>Login to continue</p>
+
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+
+        <button onclick="handleLogin()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 600; margin-top: 10px;">Login</button>
+
+        <p class="modal-switch">
+          Don't have an account?
+          <a href="#" onclick="closeLoginModal(); openRegisterModal(); return false;">Register</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeRegisterModal()">&times;</span>
+        <h2>Create Account ✨</h2>
+        <p>Start your smart learning journey</p>
+
+        <input type="text" id="registerName" placeholder="Full Name">
+        <input type="email" id="registerEmail" placeholder="Email">
+        <input type="password" id="registerPassword" placeholder="Password">
+
+        <button onclick="handleRegister()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 600; margin-top: 10px;">Register</button>
+
+        <p class="modal-switch">
+          Already have an account?
+          <a href="#" onclick="closeRegisterModal(); openLoginModal(); return false;">Login</a>
+        </p>
+      </div>
+    </div>
+
+    <script src="footer.js"></script>
+    
+    <style>
+      /* Modal Styling */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 40px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        animation: slideDown 0.3s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 20px;
+      }
+
+      .modal-close:hover,
+      .modal-close:focus {
+        color: #000;
+      }
+
+      .modal-content h2 {
+        margin-bottom: 10px;
+        color: #333;
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .modal-content p {
+        margin-bottom: 25px;
+        color: #666;
+        font-size: 14px;
+      }
+
+      .modal-content input {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 2px solid #e0e0e0;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .modal-content input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .modal-switch {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+      }
+
+      .modal-switch a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .modal-switch a:hover {
+        color: #764ba2;
+        text-decoration: underline;
+      }
+
+      @media (max-width: 600px) {
+        .modal-content {
+          margin: 20% auto;
+          width: 95%;
+          padding: 30px;
+        }
+      }
+    </style>
+    
+    <script>
+      // Check if user is logged in and update navbar
+      window.addEventListener('DOMContentLoaded', function() {
+        const userId = localStorage.getItem('userId');
+        const userName = localStorage.getItem('userName');
+        
+        if (userId) {
+          // User is logged in - show dashboard and logout
+          document.getElementById('loginBtn').style.display = 'none';
+          document.getElementById('signupBtn').style.display = 'none';
+          document.getElementById('dashboardBtn').style.display = 'block';
+          document.getElementById('dashboardLink').style.display = 'block';
+          document.getElementById('userNameDisplay').style.display = 'block';
+          document.getElementById('userNameDisplay').textContent = userName + ' ✨';
+          document.getElementById('logoutBtn').style.display = 'block';
+        } else {
+          // User not logged in - show login and sign up
+          document.getElementById('loginBtn').style.display = 'block';
+          document.getElementById('signupBtn').style.display = 'block';
+          document.getElementById('dashboardBtn').style.display = 'none';
+          document.getElementById('dashboardLink').style.display = 'none';
+          document.getElementById('userNameDisplay').style.display = 'none';
+          document.getElementById('logoutBtn').style.display = 'none';
+        }
+      });
+
+      function logoutUser() {
+        // Clear all user data from localStorage
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        
+        alert("Logged out successfully!");
+        
+        // Refresh page to show login buttons again
+        window.location.href = "index.html";
+      }
+
+      // Modal Functions
+      function openLoginModal() {
+        document.getElementById('loginModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLoginModal() {
+        document.getElementById('loginModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+
+      function openRegisterModal() {
+        document.getElementById('registerModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeRegisterModal() {
+        document.getElementById('registerModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function(event) {
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        
+        if (event.target === loginModal) {
+          closeLoginModal();
+        }
+        if (event.target === registerModal) {
+          closeRegisterModal();
+        }
+      }
+
+      function handleLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        if(!email || !password) {
+          alert("Please fill both fields");
+          return;
+        }
+
+        const BACKEND_URL = "http://localhost:5000";
+
+        fetch(`${BACKEND_URL}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        })
+        .then(async (res) => {
+          if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.message || "Login failed");
+          }
+          return res.json();
+        })
+        .then(data => {
+          alert(data.message);
+          if (data.message === "Login successful") {
+            // Save user data to localStorage
+            localStorage.setItem('userId', data.userId || 'user123');
+            const userName = data.userName || data.name || email;
+            localStorage.setItem('userName', userName);
+            localStorage.setItem('userEmail', email);
+            
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Error: " + err.message);
+        });
+      }
+
+      function handleRegister() {
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+
+        if(!name || !email || !password) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        fetch("http://localhost:5000/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          if (data.message === "User registered successfully") {
+            // Save user data to localStorage
+            localStorage.setItem('userId', data.userId || 'user123');
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userEmail', email);
+            
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Registration error");
+        });
+      }
+    </script>
   </body>
 </html>

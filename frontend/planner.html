@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Study Planner | AI Study Assistant</title>
+<link rel="stylesheet" href="planner.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <h1>🎓 AI Study Assistant</h1>
+    </div>
+    <nav class="header-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="upload.html">Upload Notes</a>
+      <a href="notes.html">My Notes</a>
+      <a href="ai-chat.html">Ask AI</a>
+      <button class="logout-btn" onclick="goBack()">Back</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="main-container">
+  <div class="planner-header">
+    <h2>📅 Your Study Planner</h2>
+    <p>Organize your study schedule and stay on track</p>
+  </div>
+
+  <div class="planner-content">
+    <!-- Left Side - Schedule -->
+    <div class="schedule-section">
+      <div class="section-header">
+        <h3>📆 Weekly Schedule</h3>
+        <button class="add-btn" onclick="addTask()">+ Add Task</button>
+      </div>
+
+      <div class="days-container">
+        <div class="day-card" id="mondayCard">
+          <h4>Monday</h4>
+          <div class="tasks-list" id="mondayTasks">
+            <div class="placeholder">No tasks yet</div>
+          </div>
+        </div>
+
+        <div class="day-card" id="tuesdayCard">
+          <h4>Tuesday</h4>
+          <div class="tasks-list" id="tuesdayTasks">
+            <div class="placeholder">No tasks yet</div>
+          </div>
+        </div>
+
+        <div class="day-card" id="wednesdayCard">
+          <h4>Wednesday</h4>
+          <div class="tasks-list" id="wednesdayTasks">
+            <div class="placeholder">No tasks yet</div>
+          </div>
+        </div>
+
+        <div class="day-card" id="thursdayCard">
+          <h4>Thursday</h4>
+          <div class="tasks-list" id="thursdayTasks">
+            <div class="placeholder">No tasks yet</div>
+          </div>
+        </div>
+
+        <div class="day-card" id="fridayCard">
+          <h4>Friday</h4>
+          <div class="tasks-list" id="fridayTasks">
+            <div class="placeholder">No tasks yet</div>
+          </div>
+        </div>
+
+        <div class="day-card" id="saturdayCard">
+          <h4>Saturday</h4>
+          <div class="tasks-list" id="saturdayTasks">
+            <div class="placeholder">No tasks yet</div>
+          </div>
+        </div>
+
+        <div class="day-card" id="sundayCard">
+          <h4>Sunday</h4>
+          <div class="tasks-list" id="sundayTasks">
+            <div class="placeholder">No tasks yet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Stats & Tips -->
+    <div class="stats-section">
+      <!-- Study Stats -->
+      <div class="stats-card">
+        <h3>📊 Study Stats</h3>
+        <div class="stat-item">
+          <span class="stat-label">Total Tasks</span>
+          <span class="stat-value" id="totalTasks">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Completed</span>
+          <span class="stat-value" id="completedTasks">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Remaining</span>
+          <span class="stat-value" id="remainingTasks">0</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <!-- Study Tips -->
+      <div class="tips-card">
+        <h3>💡 Study Tips</h3>
+        <div class="tip-item">
+          <span class="tip-number">1</span>
+          <p>Break your study into 25-minute focused sessions</p>
+        </div>
+        <div class="tip-item">
+          <span class="tip-number">2</span>
+          <p>Take 5-minute breaks between sessions</p>
+        </div>
+        <div class="tip-item">
+          <span class="tip-number">3</span>
+          <p>Review notes regularly to retain information</p>
+        </div>
+        <div class="tip-item">
+          <span class="tip-number">4</span>
+          <p>Practice problems and take quizzes often</p>
+        </div>
+      </div>
+
+      <!-- Goals -->
+      <div class="goals-card">
+        <h3>🎯 Goals</h3>
+        <div class="goal-item">
+          <input type="checkbox" id="goal1">
+          <label for="goal1">Study for 2 hours daily</label>
+        </div>
+        <div class="goal-item">
+          <input type="checkbox" id="goal2">
+          <label for="goal2">Complete 1 chapter weekly</label>
+        </div>
+        <div class="goal-item">
+          <input type="checkbox" id="goal3">
+          <label for="goal3">Take 3 quizzes weekly</label>
+        </div>
+        <div class="goal-item">
+          <input type="checkbox" id="goal4">
+          <label for="goal4">Maintain 80% accuracy</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Task Modal -->
+  <div id="taskModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3>Add Study Task</h3>
+      
+      <label>Task Name</label>
+      <input type="text" id="taskName" placeholder="e.g., Chapter 3 Reading">
+      
+      <label>Day</label>
+      <select id="taskDay">
+        <option value="monday">Monday</option>
+        <option value="tuesday">Tuesday</option>
+        <option value="wednesday">Wednesday</option>
+        <option value="thursday">Thursday</option>
+        <option value="friday">Friday</option>
+        <option value="saturday">Saturday</option>
+        <option value="sunday">Sunday</option>
+      </select>
+      
+      <label>Time (Optional)</label>
+      <input type="time" id="taskTime">
+      
+      <label>Priority</label>
+      <select id="taskPriority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+      
+      <div class="modal-buttons">
+        <button class="add-btn" onclick="addTaskConfirm()">Add Task</button>
+        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem('plannerTasks')) || {};
+
+// Initialize
+document.addEventListener('DOMContentLoaded', loadTasks);
+
+function addTask() {
+  document.getElementById('taskModal').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('taskModal').style.display = 'none';
+}
+
+function addTaskConfirm() {
+  const taskName = document.getElementById('taskName').value;
+  const taskDay = document.getElementById('taskDay').value;
+  const taskTime = document.getElementById('taskTime').value;
+  const taskPriority = document.getElementById('taskPriority').value;
+
+  if (!taskName) {
+    alert('Please enter a task name');
+    return;
+  }
+
+  const task = {
+    id: Date.now(),
+    name: taskName,
+    time: taskTime || 'All day',
+    priority: taskPriority,
+    completed: false
+  };
+
+  if (!tasks[taskDay]) tasks[taskDay] = [];
+  tasks[taskDay].push(task);
+  
+  localStorage.setItem('plannerTasks', JSON.stringify(tasks));
+  
+  document.getElementById('taskName').value = '';
+  document.getElementById('taskTime').value = '';
+  document.getElementById('taskPriority').value = 'medium';
+  closeModal();
+  loadTasks();
+}
+
+function loadTasks() {
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  
+  days.forEach(day => {
+    const container = document.getElementById(day + 'Tasks');
+    container.innerHTML = '';
+    
+    if (tasks[day] && tasks[day].length > 0) {
+      tasks[day].forEach(task => {
+        const taskEl = document.createElement('div');
+        taskEl.className = 'task-item ' + (task.completed ? 'completed' : '') + ' priority-' + task.priority;
+        taskEl.innerHTML = `
+          <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${day}', ${task.id})">
+          <div class="task-details">
+            <span class="task-name">${task.name}</span>
+            <span class="task-time">🕒 ${task.time}</span>
+          </div>
+          <button class="delete-btn" onclick="deleteTask('${day}', ${task.id})">✕</button>
+        `;
+        container.appendChild(taskEl);
+      });
+    } else {
+      container.innerHTML = '<div class="placeholder">No tasks yet</div>';
+    }
+  });
+  
+  updateStats();
+}
+
+function toggleTask(day, id) {
+  const task = tasks[day].find(t => t.id === id);
+  if (task) {
+    task.completed = !task.completed;
+    localStorage.setItem('plannerTasks', JSON.stringify(tasks));
+    loadTasks();
+  }
+}
+
+function deleteTask(day, id) {
+  tasks[day] = tasks[day].filter(t => t.id !== id);
+  localStorage.setItem('plannerTasks', JSON.stringify(tasks));
+  loadTasks();
+}
+
+function updateStats() {
+  let total = 0, completed = 0;
+  
+  Object.values(tasks).forEach(dayTasks => {
+    dayTasks.forEach(task => {
+      total++;
+      if (task.completed) completed++;
+    });
+  });
+  
+  document.getElementById('totalTasks').textContent = total;
+  document.getElementById('completedTasks').textContent = completed;
+  document.getElementById('remainingTasks').textContent = total - completed;
+  
+  const percentage = total === 0 ? 0 : (completed / total) * 100;
+  document.getElementById('progressFill').style.width = percentage + '%';
+}
+
+function goBack() {
+  window.location.href = 'dashboard.html';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  const modal = document.getElementById('taskModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+}
+</script>
+
+</body>
+</html>}
+
+loadPlans();
+</script>
+
+</body>
+</html>

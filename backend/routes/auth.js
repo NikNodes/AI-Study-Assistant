@@ -1,7 +1,13 @@
 const express = require("express");
+const crypto = require("crypto");
 const User = require("../models/user");
 
 const router = express.Router();
+
+// Password hashing function (basic - use bcrypt in production)
+function hashPassword(password) {
+  return crypto.createHash('sha256').update(password).digest('hex');
+}
 
 /* REGISTER */
 router.post("/register", async (req, res) => {
@@ -17,7 +23,8 @@ router.post("/register", async (req, res) => {
       return res.json({ message: "User already exists" });
     }
 
-    const user = new User({ name, email, password });
+    const hashedPassword = hashPassword(password);
+    const user = new User({ name, email, password: hashedPassword });
     await user.save();
 
     res.json({ message: "User registered successfully" });
@@ -30,10 +37,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+    const hashedPassword = hashPassword(password);
 
-    const user = await User.findOne({ email, password });
+    const user = await User.findOne({ email, password: hashedPassword });
     if (!user) {
-      return res.json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
     res.json({

@@ -7,57 +7,137 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-  <h2>AI Study Assistant</h2>
-  <button onclick="goBack()">Back</button>
-</div>
-
-<!-- Notes Section -->
-<div class="notes-container">
-  <h2>📚 My Uploaded Notes</h2>
-
-  <div class="notes-list">
-    <div class="note-card">
-      <span>Operating Systems Notes.pdf</span>
-      <button>View</button>
+<!-- Header -->
+<header class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <h1>🎓 AI Study Assistant</h1>
     </div>
-
-    <div class="note-card">
-      <span>Machine Learning Unit 3.pdf</span>
-      <button>View</button>
-    </div>
-
-    <div class="note-card">
-      <span>Software Engineering SRS.docx</span>
-      <button>View</button>
-    </div>
+    <nav class="header-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="upload.html">Upload Notes</a>
+      <a href="ai-chat.html">Ask AI</a>
+      <a href="quiz.html">Quiz</a>
+      <button class="logout-btn" onclick="goBack()">Back</button>
+    </nav>
   </div>
-</div>
+</header>
+
+<!-- Main Content -->
+<main class="main-container">
+  <div class="notes-header">
+    <div class="header-info">
+      <h2>📚 My Study Notes</h2>
+      <p>Manage all your uploaded study materials in one place</p>
+    </div>
+    <a href="upload.html" class="upload-link">
+      <button class="add-note-btn">+ Upload New Note</button>
+    </a>
+  </div>
+
+  <!-- Notes Grid -->
+  <div class="notes-list" id="notesList">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</main>
 
 <script>
 const userId = localStorage.getItem("userId");
 
-fetch(`http://localhost:5000/api/notes/user/${userId}`)
-  .then(res => res.json())
-  .then(notes => {
-    const list = document.querySelector(".notes-list");
-    list.innerHTML = "";
+if (!userId) {
+  alert("Please login first");
+  window.location.href = "dashboard.html";
+} else {
+  fetch(`http://localhost:5000/api/notes/user/${userId}`)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Fetch failed: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(notes => {
+      const list = document.getElementById("notesList");
+      list.innerHTML = "";
 
-    notes.forEach(note => {
-      const div = document.createElement("div");
-      div.className = "note-card";
-      div.innerHTML = `
-        <span>${note.originalname}</span>
-        <a href="http://localhost:5000/uploads/${note.filename}" target="_blank">
-          <button>View</button>
-        </a>
+      if (notes.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📝</div>
+            <h3>No Notes Yet</h3>
+            <p>You haven't uploaded any study notes yet. Start by uploading your first note!</p>
+            <a href="upload.html"><button class="empty-btn">Upload Your First Note</button></a>
+          </div>
+        `;
+        return;
+      }
+
+      notes.forEach((note, index) => {
+        const div = document.createElement("div");
+        div.className = "note-card";
+        div.style.animationDelay = (index * 0.1) + "s";
+        const fileName = note.originalname;
+        const fileExtension = fileName.split('.').pop().toUpperCase();
+        const fileIcon = getFileIcon(fileExtension);
+        
+        div.innerHTML = `
+          <div class="note-content">
+            <div class="note-icon">${fileIcon}</div>
+            <div class="note-info">
+              <h3>${fileName}</h3>
+              <p class="note-date">Uploaded on ${new Date(note.uploadedAt).toLocaleDateString()}</p>
+            </div>
+          </div>
+          <div class="note-actions">
+            <a href="http://localhost:5000/uploads/${note.filename}" target="_blank">
+              <button class="view-btn">View</button>
+            </a>
+            <button class="download-btn" onclick="downloadNote('${note.filename}', '${fileName}')">Download</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    })
+    .catch(error => {
+      console.error("Fetch error:", error);
+      document.getElementById("notesList").innerHTML = `
+        <div class="error-state">
+          <div class="error-icon">⚠️</div>
+          <h3>Error Loading Notes</h3>
+          <p>${error.message}</p>
+          <button onclick="location.reload()">Try Again</button>
+        </div>
       `;
-      list.appendChild(div);
     });
-  });
+}
+
+function getFileIcon(extension) {
+  const icons = {
+    'PDF': '📕',
+    'TXT': '📄',
+    'DOC': '📘',
+    'DOCX': '📗',
+    'PPT': '🎯',
+    'PPTX': '🎯'
+  };
+  return icons[extension] || '📋';
+}
+
+function downloadNote(filename, originalName) {
+  const link = document.createElement('a');
+  link.href = `http://localhost:5000/uploads/${filename}`;
+  link.download = originalName;
+  link.click();
+}
+
+function goBack() {
+  window.location.href = "dashboard.html";
+}
 </script>
 
+</body>
+</html>
 
 </body>
 </html>

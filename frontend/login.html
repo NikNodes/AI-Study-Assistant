@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | AI Study Assistant</title>
     <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="footer.css">
 </head>
 <body>
 
 <div class="auth-container">
   <div class="auth-box">
-    <h2>Welcome Back 👋</h2>
+    <h2>Welcome Back </h2>
     <p>Login to continue</p>
 
     <input type="email" id="email" placeholder="Email">
@@ -56,7 +57,14 @@ function login() {
   .then(data => {
     alert(data.message);
     if (data.message === "Login successful") {
-      // Login hone ke baad redirect karein
+      // Save user data to localStorage
+      localStorage.setItem('userId', data.userId || 'user123');
+      // Save the user's name (from backend) or email as fallback
+      const userName = data.userName || data.name || email;
+      localStorage.setItem('userName', userName);
+      localStorage.setItem('userEmail', email);
+      
+      // Redirect to dashboard
       window.location.href = "dashboard.html";
     }
   })
