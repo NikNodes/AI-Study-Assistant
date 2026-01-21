@@ -1,6 +1,6 @@
 ⚙️ Installation & Setup
 1️⃣ Clone the Repository
-git clone https://github.com//ai-study-assistant.git
+git clone https://github.com/NikNodes/ai-study-assistant.git
 cd AI-Study-Assistant
 
 2️⃣ Install Backend Dependencies
