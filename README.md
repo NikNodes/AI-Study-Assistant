@@ -22,19 +22,56 @@ node server.js
 Server will run on:
 http://localhost:5000
 
+
+6️⃣ PROJECT DIRECTORY STRUCTURE
+AI-Study-Assistant/
+│
+├── backend/
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Note.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── notes.js
+│   │   ├── ai.js
+│   │   └── planner.js
+│   ├── uploads/
+│   ├── server.js
+│   └── .env
+│
+├── frontend/
+│   ├── login.html
+│   ├── register.html
+│   ├── dashboard.html
+│   ├── upload.html
+│   ├── notes.html
+│
+
 ▶️ How to Use
-Open browser and go to:
-http://localhost:5000/login.html
+    Open browser and go to:
+            http://localhost:5000/login.html
+            Register a new account
+            Login using your credentials
+            Upload study notes
+            View notes in My Notes
+            Ask questions using Ask AI
+            Manage tasks using Study Planner
 
+ TECHNOLOGY STACK
 
-Register a new account
+Frontend: 
+        HTML5
+        CSS3
+        JavaScript
 
-Login using your credentials
+Backend:
 
-Upload study notes
+        Node.js
+        Express.js
+Database:
 
-View notes in My Notes
+        MongoDB
 
-Ask questions using Ask AI
+AI:
 
-Manage tasks using Study Planner
+        External AI API (via backend)
