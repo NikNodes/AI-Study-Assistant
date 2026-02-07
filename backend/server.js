@@ -30,6 +30,10 @@ app.use("/api/ai", aiRoutes);
 // Planner routes
 const plannerRoutes = require("./routes/planner");
 app.use("/api/planner", plannerRoutes);
+// Quiz routes
+const quizRoutes = require("./routes/quiz");
+app.use("/api/quiz", quizRoutes);
+
 // Start server (ALWAYS LAST)
 const PORT = 5000;
 app.listen(PORT, () => {

@@ -1,6 +1,9 @@
 const express = require("express");
 const multer = require("multer");
 const Note = require("../models/Note");
+const fs = require("fs");
+const path = require("path");
+
 
 const router = express.Router();
 
@@ -53,5 +56,37 @@ router.get("/user/:userId", async (req, res) => {
     res.status(500).json({ message: "Error fetching notes" });
   }
 });
+router.delete("/:id", async (req, res) => {
+  try {
+    console.log("DELETE REQUEST ID:", req.params.id);
+
+    const note = await Note.findById(req.params.id);
+    console.log("FOUND NOTE:", note);
+
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    const filePath = path.join(__dirname, "../uploads", note.filename);
+    console.log("FILE PATH:", filePath);
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      console.log("FILE DELETED FROM DISK");
+    } else {
+      console.log("FILE NOT FOUND ON DISK");
+    }
+
+    await Note.findByIdAndDelete(req.params.id);
+    console.log("NOTE DELETED FROM DB");
+
+    res.json({ message: "Note deleted successfully" });
+  } catch (err) {
+    console.error("DELETE ERROR:", err);
+    res.status(500).json({ message: "Delete failed" });
+  }
+});
+
+
 
 module.exports = router;

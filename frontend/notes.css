@@ -368,3 +368,18 @@ body {
     width: 100%;
   }
 }
+.delete-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  background: #d9363e;
+}

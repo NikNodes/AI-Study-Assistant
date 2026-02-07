@@ -1,165 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Generate Quiz | AI Study Assistant</title>
-<link rel="stylesheet" href="quiz.css">
-<link rel="stylesheet" href="footer.css">
+  <meta charset="UTF-8">
+  <title>AI Quiz Generator</title>
+  <link rel="stylesheet" href="quiz.css">
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-  <h2>AI Study Assistant</h2>
-  <button onclick="goBack()">Back</button>
-</div>
-
-<!-- Quiz Container -->
 <div class="quiz-container">
-  <h2>📝 Generate Quiz</h2>
+  <h2>🧠 AI Quiz Generator</h2>
+  <p class="subtitle">Generate MCQs instantly using AI</p>
 
-  <input type="text" id="topic" placeholder="Enter topic (e.g. Operating System)">
-  <button onclick="generateQuiz()">Generate Quiz</button>
+  <div class="input-box">
+    <input type="text" id="topic" placeholder="Enter topic (e.g. Operating System)">
+    <button onclick="generateQuiz()">Generate</button>
+  </div>
 
-  <div id="quizArea"></div>
+  <div id="quizBox"></div>
 </div>
 
 <script>
-function goBack() {
-  window.location.href = "dashboard.html";
-}
-
-// AI-like quiz generator
 function generateQuiz() {
   const topic = document.getElementById("topic").value.trim();
-  const quizArea = document.getElementById("quizArea");
-  quizArea.innerHTML = "";
+  const box = document.getElementById("quizBox");
 
   if (!topic) {
-    alert("Please enter a topic");
+    box.innerHTML = "<p class='error'>Please enter a topic.</p>";
     return;
   }
 
-  const questions = [
-    {
-      q: `What is ${topic}?`,
-      options: [
-        `${topic} is a system concept`,
-        `${topic} is hardware`,
-        `${topic} is a game`
-      ],
-      correct: 0
-    },
-    {
-      q: `Which field uses ${topic}?`,
-      options: [
-        `Education`,
-        `Software Engineering`,
-        `Cooking`
-      ],
-      correct: 1
-    },
-    {
-      q: `Main advantage of ${topic}?`,
-      options: [
-        `Improves efficiency`,
-        `Consumes memory`,
-        `Reduces speed`
-      ],
-      correct: 0
-    }
-  ];
+  box.innerHTML = "<p class='loading'>Generating quiz...</p>";
 
-  questions.forEach((item, index) => {
-    const div = document.createElement("div");
-    div.className = "question";
-    div.innerHTML = `<p>${index + 1}. ${item.q}</p>`;
-
-    item.options.forEach((opt, i) => {
-      const btn = document.createElement("button");
-      btn.innerText = opt;
-      btn.onclick = () => checkAnswer(btn, i === item.correct);
-      div.appendChild(btn);
+  fetch("http://localhost:5000/api/quiz/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ topic })
+  })
+  .then(res => res.json())
+  .then(data => {
+    box.innerHTML = "";
+    data.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.className = "question-card";
+      div.innerHTML = `
+        <h4>Q${i + 1}. ${q.question}</h4>
+        <ul>
+          ${q.options.map(opt => `<li>${opt}</li>`).join("")}
+        </ul>
+        <p class="answer">✔ Answer: ${q.answer}</p>
+      `;
+      box.appendChild(div);
     });
-
-    quizArea.appendChild(div);
+  })
+  .catch(() => {
+    box.innerHTML = "<p class='error'>AI quiz generation failed.</p>";
   });
 }
-
-function checkAnswer(btn, correct) {
-  if (correct) {
-    btn.style.background = "#16a34a";
-    alert("Correct ✅");
-  } else {
-    btn.style.background = "#dc2626";
-    alert("Wrong ❌");
-  }
-}
 </script>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-container">
-    <!-- Quick Links Section -->
-    <div class="footer-section quick-links">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="upload.html">Upload Notes</a></li>
-        <li><a href="notes.html">My Notes</a></li>
-        <li><a href="ai-chat.html">Ask AI</a></li>
-        <li><a href="quiz.html">Generate Quiz</a></li>
-      </ul>
-    </div>
-
-    <!-- Resources Section -->
-    <div class="footer-section resources">
-      <h3>Resources</h3>
-      <ul>
-        <li><a href="#">Documentation</a></li>
-        <li><a href="#">Learning Guide</a></li>
-        <li><a href="#">Study Tips</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-      </ul>
-    </div>
-
-    <!-- Contact Section -->
-    <div class="footer-section contact">
-      <h3>Contact</h3>
-      <div class="contact-info">
-        <div class="contact-item" data-copy="support@aistudyassistant.com" title="Click to copy email">
-          📧 support@aistudyassistant.com
-        </div>
-        <div class="contact-item" data-copy="+1-800-STUDY-AI" title="Click to copy phone">
-          📱 +1-800-STUDY-AI
-        </div>
-        <div class="contact-item">
-          🌐 <a href="#">aistudyassistant.com</a>
-        </div>
-        <div class="contact-item">
-          📍 Online Platform
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer Bottom -->
-  <div class="footer-bottom">
-    <p>&copy; 2026 AI Study Assistant. All rights reserved.</p>
-    <p>Made with ❤️ for students</p>
-    <div class="social-links">
-      <a href="https://twitter.com" target="_blank" title="Twitter">𝕏</a>
-      <a href="https://facebook.com" target="_blank" title="Facebook">f</a>
-      <a href="https://linkedin.com" target="_blank" title="LinkedIn">in</a>
-      <a href="https://instagram.com" target="_blank" title="Instagram">📷</a>
-    </div>
-  </div>
-</footer>
-
-<script src="footer.js"></script>
 
 </body>
 </html>
