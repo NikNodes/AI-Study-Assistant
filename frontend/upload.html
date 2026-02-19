@@ -195,7 +195,7 @@ function uploadNote() {
     uploadStatus.style.display = "block";
   });
 
-  xhr.open("POST", "http://localhost:5000/api/notes/upload");
+  xhr.open("POST", "https://ai-study-assistant-q3rn.onrender.com/api/notes/upload");
   xhr.send(formData);
 }
 

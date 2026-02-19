@@ -54,7 +54,7 @@ if (!userId) {
 }
 
 /* Fetch notes */
-fetch(`http://localhost:5000/api/notes/user/${userId}`)
+fetch(`https://ai-study-assistant-q3rn.onrender.com/api/notes/user/${userId}`)
   .then(res => {
     if (!res.ok) throw new Error("Failed to fetch notes");
     return res.json();

@@ -28,7 +28,7 @@ function askAI() {
   const chatBox = document.getElementById("chatBox");
   chatBox.innerHTML += `<div class="user">${question}</div>`;
 
-  fetch("http://localhost:5000/api/ai/ask", {
+  fetch("https://ai-study-assistant-q3rn.onrender.com/api/ai/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question })

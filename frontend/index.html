@@ -195,12 +195,12 @@
         <div class="footer-section resources">
           <h3>Resources</h3>
           <ul>
-            <li><a href="#">Documentation</a></li>
-            <li><a href="#">Learning Guide</a></li>
-            <li><a href="#">Study Tips</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="documentation.html">Documentation</a></li>
+            <li><a href="learning-guide.html">Learning Guide</a></li>
+            <li><a href="study-tips.html">Study Tips</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
           </ul>
         </div>
 
@@ -473,7 +473,7 @@
           return;
         }
 
-        const BACKEND_URL = "http://localhost:5000";
+        const BACKEND_URL = "https://ai-study-assistant-q3rn.onrender.com"; // Change this to your backend URL
 
         fetch(`${BACKEND_URL}/api/auth/login`, {
           method: "POST",
@@ -516,7 +516,7 @@
           return;
         }
 
-        fetch("http://localhost:5000/api/auth/register", {
+        fetch("https://ai-study-assistant-q3rn.onrender.com/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password })

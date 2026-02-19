@@ -31,7 +31,7 @@ function generateQuiz() {
 
   box.innerHTML = "<p class='loading'>Generating quiz...</p>";
 
-  fetch("http://localhost:5000/api/quiz/generate", {
+  fetch("https://ai-study-assistant-q3rn.onrender.com/api/quiz/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ topic })
