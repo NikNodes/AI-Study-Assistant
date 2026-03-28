@@ -1,3 +1,7 @@
+* {
+  transition: all 0.3s ease;
+}
+
 body {
   background: #f4f6f8;
   font-family: Arial, sans-serif;
@@ -8,7 +12,8 @@ body {
 }
 
 .chat-container {
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -57,4 +62,25 @@ body {
 }
 .input-area button:hover {
   background: #4338ca;
+}
+/* 🔥 Responsive Design */
+@media (max-width: 768px) {
+
+  .chat-container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .chat-box {
+    height: 250px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .input-area button {
+    padding: 8px;
+  }
+
 }

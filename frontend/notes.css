@@ -1,4 +1,7 @@
 * {
+  transition: all 0.3s ease;
+}
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -382,4 +385,25 @@ body {
 
 .delete-btn:hover {
   background: #d9363e;
+}
+/* 🔥 Responsive Design */
+@media (max-width: 768px) {
+
+  .chat-container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .chat-box {
+    height: 250px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .input-area button {
+    padding: 8px;
+  }
+
 }

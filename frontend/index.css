@@ -1,4 +1,6 @@
-/* General Styling */
+* {
+  transition: all 0.3s ease;
+}/* General Styling */
 * {
   margin: 0;
   padding: 0;
