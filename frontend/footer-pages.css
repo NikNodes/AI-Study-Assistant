@@ -29,3 +29,17 @@ a.back {
   color: #4f46e5;
   font-weight: 600;
 }
+
+.page-footer {
+  text-align: center;
+  padding: 30px;
+  margin-top: 40px;
+  border-top: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.page-footer p {
+  color: #666;
+  font-size: 14px;
+  margin: 5px 0;
+}
